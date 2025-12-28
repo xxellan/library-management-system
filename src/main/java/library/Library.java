@@ -3,10 +3,6 @@ package library;
 import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDateTime;
-package library;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Library {
 
@@ -18,28 +14,57 @@ public class Library {
         operationLog = new OperationLog();
     }
 
-    public void addBook(Book book) {
-        books.add(book);
-    }
+    // ===== ВЛОЖЕННЫЙ СТАТИЧЕСКИЙ КЛАСС =====
+    public static class OperationLog {
 
-    public Book findBookById(int id) {
-        return null;
-    }
+        private List<LogEntry> entries = new ArrayList<>();
 
-    public List<Book> findBooksByAuthor(String author) {
-        return new ArrayList<>();
-    }
+        public void addEntry(OperationType type, String description) {
+            entries.add(new LogEntry(type, description));
+        }
 
-    public void borrowBook(int id) {
-    }
+        public List<LogEntry> getEntries() {
+            return entries;
+        }
 
-    public void returnBook(int id) {
-    }
+        public void printLog() {
+            for (LogEntry entry : entries) {
+                System.out.println(entry);
+            }
+        }
 
-    public List<Book> getAvailableBooks() {
-        return new ArrayList<>();
-    }
+        // ===== ВНУТРЕННИЙ КЛАСС =====
+        public class LogEntry {
+            private OperationType type;
+            private LocalDateTime timestamp;
+            private String description;
 
-    public void printOperationLog() {
+            public LogEntry(OperationType type, String description) {
+                this.type = type;
+                this.description = description;
+                this.timestamp = LocalDateTime.now();
+            }
+
+            public OperationType getType() {
+                return type;
+            }
+
+            public LocalDateTime getTimestamp() {
+                return timestamp;
+            }
+
+            public String getDescription() {
+                return description;
+            }
+
+            @Override
+            public String toString() {
+                return "[" + timestamp + "] " + type + ": " + description;
+            }
+        }
+
+        public enum OperationType {
+            ADD_BOOK, BORROW, RETURN
+        }
     }
 }
