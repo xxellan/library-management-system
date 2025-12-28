@@ -67,23 +67,28 @@ public class Library {
             ADD_BOOK, BORROW, RETURN
         }
     }
-}
-public String getStatistics() {
-    int total = books.size();
-    long availableCount = books.stream().filter(Book::isAvailable).count();
-    long borrowedCount = total - availableCount;
-    return "Total books: " + total + ", Available: " + availableCount + ", Borrowed: " + borrowedCount;
-}
-public void removeBook(int id) {
-    books.removeIf(book -> book.getId() == id);
-    operationLog.addEntry(OperationLog.OperationType.RETURN, "Removed book with ID " + id);
-}
-public void updateBook(int id, Book newData) {
-    for (int i = 0; i < books.size(); i++) {
-        if (books.get(i).getId() == id) {
-            books.set(i, newData);
-            operationLog.addEntry(OperationLog.OperationType.ADD_BOOK, "Updated book with ID " + id);
-            break;
+
+    public String getStatistics() {
+        int total = books.size();
+        long availableCount = books.stream().filter(Book::isAvailable).count();
+        long borrowedCount = total - availableCount;
+        return "Total books: " + total + ", Available: " + availableCount + ", Borrowed: " + borrowedCount;
+    }
+
+    // Метод removeBook
+    public void removeBook(int id) {
+        books.removeIf(book -> book.getId() == id);
+        operationLog.addEntry(OperationLog.OperationType.RETURN, "Removed book with ID " + id);
+    }
+
+    // Метод updateBook
+    public void updateBook(int id, Book newData) {
+        for (int i = 0; i < books.size(); i++) {
+            if (books.get(i).getId() == id) {
+                books.set(i, newData);
+                operationLog.addEntry(OperationLog.OperationType.ADD_BOOK, "Updated book with ID " + id);
+                break;
+            }
         }
     }
 }
