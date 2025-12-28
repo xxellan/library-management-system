@@ -68,3 +68,9 @@ public class Library {
         }
     }
 }
+public String getStatistics() {
+    int total = books.size();
+    long availableCount = books.stream().filter(Book::isAvailable).count();
+    long borrowedCount = total - availableCount;
+    return "Total books: " + total + ", Available: " + availableCount + ", Borrowed: " + borrowedCount;
+}
