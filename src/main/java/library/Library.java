@@ -78,3 +78,12 @@ public void removeBook(int id) {
     books.removeIf(book -> book.getId() == id);
     operationLog.addEntry(OperationLog.OperationType.RETURN, "Removed book with ID " + id);
 }
+public void updateBook(int id, Book newData) {
+    for (int i = 0; i < books.size(); i++) {
+        if (books.get(i).getId() == id) {
+            books.set(i, newData);
+            operationLog.addEntry(OperationLog.OperationType.ADD_BOOK, "Updated book with ID " + id);
+            break;
+        }
+    }
+}
