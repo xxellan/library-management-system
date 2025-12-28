@@ -74,3 +74,7 @@ public String getStatistics() {
     long borrowedCount = total - availableCount;
     return "Total books: " + total + ", Available: " + availableCount + ", Borrowed: " + borrowedCount;
 }
+public void removeBook(int id) {
+    books.removeIf(book -> book.getId() == id);
+    operationLog.addEntry(OperationLog.OperationType.RETURN, "Removed book with ID " + id);
+}
